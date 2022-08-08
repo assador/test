@@ -28,7 +28,7 @@ long_line_column=80
 [files]
 current_page=1
 FILE_NAME_0=392;HTML;0;EUTF-8;0;1;1;%2Fvar%2Fwww%2Ftest%2Fpublic%2Findex.html;0;2
-FILE_NAME_1=646;TypeScript;0;EUTF-8;0;1;1;%2Fvar%2Fwww%2Ftest%2Fsrc%2Frouter%2Findex.ts;0;2
+FILE_NAME_1=271;TypeScript;0;EUTF-8;0;1;1;%2Fvar%2Fwww%2Ftest%2Fsrc%2Frouter%2Findex.ts;0;2
 FILE_NAME_2=97;None;0;EUTF-8;0;1;1;%2Fvar%2Fwww%2Ftest%2Fsrc%2Fviews%2FUserView.vue;0;2
 FILE_NAME_3=176;TypeScript;0;EUTF-8;1;1;1;%2Fvar%2Fwww%2Ftest%2Fsrc%2Fmain.ts;0;4
 FILE_NAME_4=147;TypeScript;0;EUTF-8;0;1;1;%2Fvar%2Fwww%2Ftest%2Fsrc%2FApp.vue;0;2
