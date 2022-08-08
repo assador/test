@@ -1,0 +1,45 @@
+.users-container {
+  display: table;
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+  dl, & > div {
+    display: table-row;
+  }
+  dl div, & > div > div {
+    display: table-cell;
+    border: 1px solid #cccccc;
+  }
+  dd, dt, & > div > div {
+    display: table-cell;
+    padding: 0.2rem 0.3rem;
+    vertical-align: baseline;
+  }
+  & > div > div {
+    > span, > a.active {
+      font-weight: bold;
+    }
+  }
+  & > div > div span::after {
+    content: ": ";
+  }
+  dt {
+    display: none;
+    text-align: right;
+    font-weight: bold;
+  }
+  dt::after {
+    content: ": ";
+  }
+}
+.paginator-link {
+  display: inline-block;
+  padding: 0.5rem;
+}
+.paginator-link {
+  display: inline-block;
+  padding: 0.5rem;
+  &.active {
+    font-weight: bold;
+  }
+}

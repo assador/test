@@ -1,18 +1,86 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
+  <div class="home-container">
+    <header class="home-header">
+    </header>
+    <main class="home-body">
+      <users-component :users="usersPaged" />
+    </main>
+    <footer>
+      <a
+        v-for="page in usersPagesCount"
+        :key="'page_' + page"
+        :class="'paginator-link' + (page === usersPage ? ' active' : '')"
+        href="javascript:void(0)"
+        @click="usersPage = page"
+      >
+        {{ page }}
+      </a>
+    </footer>
   </div>
 </template>
 
 <script lang="ts">
-import { Options, Vue } from 'vue-class-component';
-import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
+import { defineComponent } from 'vue';
+import { User, UserProcessed } from '@/store/types';
+import UsersComponent from '@/components/UsersComponent.vue';
 
-@Options({
+export default defineComponent({
   components: {
-    HelloWorld,
+    UsersComponent,
   },
-})
-export default class HomeView extends Vue {}
+  data() {
+    return {
+      usersPage: 1,
+      usersPagesCount: 0,
+      usersOnPageCount: 5,
+    };
+  },
+  computed: {
+    usersProcessed(): Array<UserProcessed> {
+      const users: Array<UserProcessed> = [];
+      this.$store.state.users.map((user: User) => users.push({
+        name: user.name,
+        email: user.email,
+        city: user.address.city,
+        phone: user.phone,
+        website: user.website,
+      }));
+      users.sort((a: UserProcessed, b: UserProcessed) => {
+        if (
+          a[this.$store.state.usersSort.property as keyof typeof a] <
+          b[this.$store.state.usersSort.property as keyof typeof b]
+        ) {
+          return this.$store.state.usersSort.reverse ? 1 : -1;
+        }
+        if (
+          a[this.$store.state.usersSort.property as keyof typeof a] >
+          b[this.$store.state.usersSort.property as keyof typeof b]
+        ) {
+          return this.$store.state.usersSort.reverse ? -1 : 1;
+        }
+        return 0;
+      });
+      return users;
+    },
+    usersPaged(): Array<UserProcessed> {
+      const users: Array<UserProcessed> = [];
+      for (let i = 0; i < this.usersProcessed.length; i++) {
+        if (
+          i >= this.usersOnPageCount * (this.usersPage - 1) &&
+          i < this.usersOnPageCount * this.usersPage
+        ) {
+          users.push(this.usersProcessed[i]);
+        }
+      }
+      return users;
+    },
+  },
+  mounted() {
+    this.$store.dispatch('setUsers').then(() => {
+      this.usersPagesCount = Math.ceil(
+        this.$store.state.users.length / this.usersOnPageCount
+      );
+    });
+  },
+});
 </script>
