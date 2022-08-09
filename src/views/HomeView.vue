@@ -1,6 +1,7 @@
 <template>
   <div class="home-container">
     <header class="home-header">
+      <h1>Список пользователей</h1>
     </header>
     <main class="home-body">
       <users-component :users="usersPaged" />
@@ -31,20 +32,34 @@ export default defineComponent({
   data() {
     return {
       usersPage: 1,
-      usersPagesCount: 0,
       usersOnPageCount: 5,
     };
   },
   computed: {
     usersProcessed(): Array<UserProcessed> {
       const users: Array<UserProcessed> = [];
-      this.$store.state.users.map((user: User) => users.push({
-        name: user.name,
-        email: user.email,
-        city: user.address.city,
-        phone: user.phone,
-        website: user.website,
-      }));
+      this.$store.state.users.map((user: User) => {
+        let show = true;
+        for (const field in user) {
+          if (
+            this.$store.state.filters[field] &&
+            !user[field as keyof typeof user].toString().includes(
+              this.$store.state.filters[field]
+            )
+          ) {
+            show = false;
+          }
+        }
+        if (show) {
+          users.push({
+            name: user.name,
+            email: user.email,
+            city: user.address.city,
+            phone: user.phone,
+            website: user.website,
+          });
+        }
+      });
       users.sort((a: UserProcessed, b: UserProcessed) => {
         if (
           a[this.$store.state.usersSort.property as keyof typeof a] <
@@ -62,6 +77,11 @@ export default defineComponent({
       });
       return users;
     },
+    usersPagesCount(): number {
+      return Math.ceil(
+        this.usersProcessed.length / this.usersOnPageCount
+      );
+    },
     usersPaged(): Array<UserProcessed> {
       const users: Array<UserProcessed> = [];
       for (let i = 0; i < this.usersProcessed.length; i++) {
@@ -76,11 +96,7 @@ export default defineComponent({
     },
   },
   mounted() {
-    this.$store.dispatch('setUsers').then(() => {
-      this.usersPagesCount = Math.ceil(
-        this.$store.state.users.length / this.usersOnPageCount
-      );
-    });
+    this.$store.dispatch('setUsers');
   },
 });
 </script>

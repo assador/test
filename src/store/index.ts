@@ -8,7 +8,8 @@ const store = createStore({
     usersSort: {
       property: 'id',
       reverse: false,
-    }
+    },
+    filters: {} as Record<string, string>,
   },
   mutations: {
     setUsers(state, users) {
@@ -17,6 +18,11 @@ const store = createStore({
     sortUsers(state, payload) {
       state.usersSort.property = payload.property;
       state.usersSort.reverse = payload.reverse;
+    },
+    filterUsers(state, payload) {
+      state.filters[
+        payload.property as keyof typeof state.filters
+      ] = (payload.substring as string);
     },
   },
   actions: {
@@ -29,6 +35,9 @@ const store = createStore({
     },
     sortUsers({commit}, payload) {
       commit('sortUsers', payload);
+    },
+    filterUsers({commit}, payload) {
+      commit('filterUsers', payload);
     },
   },
 });

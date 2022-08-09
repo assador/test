@@ -3,17 +3,18 @@
   width: 100%;
   border-collapse: collapse;
   border-spacing: 0;
-  dl, & > div {
+  .users-list, .users-captions, .users-search {
     display: table-row;
-  }
-  dl div, & > div > div {
-    display: table-cell;
-    border: 1px solid #cccccc;
-  }
-  dd, dt, & > div > div {
-    display: table-cell;
-    padding: 0.2rem 0.3rem;
-    vertical-align: baseline;
+    & > * {
+      display: table-cell;
+      padding: 0.2rem 0.3rem;
+      vertical-align: baseline;
+      border: 1px solid #cccccc;
+      input {
+        box-sizing: border-box;
+        width: 100%;
+      }
+    }
   }
   & > div > div {
     > span, > a.active {
