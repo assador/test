@@ -29,7 +29,6 @@
         :key="field"
       >
         <input
-          v-if="field !== 'show'"
           type="text"
           placeholder="Фильтровать по значению"
           title="Фильтровать по значению"

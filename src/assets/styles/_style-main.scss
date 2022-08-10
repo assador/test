@@ -62,7 +62,7 @@
     dt::after {
       content: ": ";
     }
-    dd dl, > div:last-child {
+    dd dl, > div:last-child, > form > div:last-child {
       margin-top: 0.7rem;
     }
     dd dl {

@@ -42,27 +42,26 @@ export default defineComponent({
     usersProcessed(): Array<UserProcessed> {
       const users: Array<UserProcessed> = [];
       this.$store.state.users.map((user: User) => {
+        const userProcessed: UserProcessed = {
+          id: user.id,
+          name: user.name || '',
+          email: user.email || '',
+          city: !user.address ? '' : user.address.city || '',
+          phone: user.phone || '',
+          website: user.website || '',
+        };
         let show = true;
-        for (const field in user) {
+        for (const field in userProcessed) {
           if (
             this.$store.state.filters[field] &&
-            !user[field as keyof typeof user]!.toString().includes(
+            !userProcessed[field as keyof typeof userProcessed]!.toString().includes(
               this.$store.state.filters[field]
             )
           ) {
             show = false;
           }
         }
-        if (show) {
-          users.push({
-            id: user.id,
-            name: user.name || '',
-            email: user.email || '',
-            city: !user.address ? '' : user.address.city || '',
-            phone: user.phone || '',
-            website: user.website || '',
-          });
-        }
+        if (show) users.push(userProcessed);
       });
       users.sort((a: UserProcessed, b: UserProcessed) => {
         if (
