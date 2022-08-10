@@ -1,4 +1,4 @@
-.users-container {
+.page-container {
   display: table;
   width: 100%;
   border-collapse: collapse;
@@ -16,21 +16,54 @@
       }
     }
   }
-  & > div > div {
+  .users-captions > * {
     > span, > a.active {
       font-weight: bold;
     }
-  }
-  & > div > div span::after {
-    content: ": ";
+    > span::after {
+      content: ": ";
+    }
+    > span:last-child::after {
+      content: "";
+    }
   }
   dt {
-    display: none;
-    text-align: right;
     font-weight: bold;
   }
-  dt::after {
-    content: ": ";
+  .users-list dt {
+    display: none;
+    text-align: right;
+    &::after {
+      content: ": ";
+    }
+  }
+  .user-body {
+    display: grid;
+    grid-template-columns: auto 1fr;
+  }
+  .user-card {
+    display: table;
+    dl {
+      display: table-row;
+      dt, dd {
+        display: table-cell;
+        vertical-align: baseline;
+      }
+      dt {
+        padding-right: 0.3rem;
+        text-align: right;
+      }
+    }
+    dt::after {
+      content: ": ";
+    }
+    dd dl {
+      display: table;
+      margin-top: 0.7rem;
+      > div {
+        display: table-row-group;
+      }
+    }
   }
 }
 .paginator-link {

@@ -26,8 +26,8 @@ const store = createStore({
     },
   },
   actions: {
-    async setUsers({commit}) {
-      await axios.get('https://jsonplaceholder.typicode.com/users')
+    setUsers({commit}) {
+      axios.get('https://jsonplaceholder.typicode.com/users')
         .then(response => {
           commit('setUsers', response.data);
         })

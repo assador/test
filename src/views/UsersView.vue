@@ -1,9 +1,9 @@
 <template>
-  <div class="home-container">
-    <header class="home-header">
+  <div class="page-container">
+    <header class="users-header">
       <h1>Список пользователей</h1>
     </header>
-    <main class="home-body">
+    <main class="users-body">
       <users-component :users="usersPaged" />
     </main>
     <footer>
@@ -52,6 +52,7 @@ export default defineComponent({
         }
         if (show) {
           users.push({
+            id: user.id,
             name: user.name,
             email: user.email,
             city: user.address.city,
