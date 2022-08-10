@@ -8,12 +8,14 @@
     & > * {
       display: table-cell;
       width: 0;
-      padding: 0.2rem 0.3rem;
-      vertical-align: baseline;
-      border: 1px solid #cccccc;
+      padding: 0.2rem 0.5rem;
+      vertical-align: middle;
       input, button {
         box-sizing: border-box;
         width: 100%;
+      }
+      &:first-child {
+        padding-right: 2rem;
       }
     }
   }
@@ -44,39 +46,46 @@
     display: grid;
     grid-template-columns: auto 1fr;
   }
+  .user-avatar {
+    border-radius: 50%;
+  }
   .user-card {
-    display: table;
-    dl {
-      display: table-row;
-      dt, dd {
-        display: table-cell;
-        vertical-align: baseline;
-      }
-      dt {
-        width: 0;
-        white-space: nowrap;
-        padding-right: 0.3rem;
-        text-align: right;
-      }
+    display: grid;
+    grid-template-columns: auto 1fr;
+    .user-avatar {
+      margin-right: 1.5rem;
     }
-    dt::after {
-      content: ": ";
-    }
-    dd dl, > div:last-child, > form > div:last-child {
-      margin-top: 0.7rem;
-    }
-    dd dl {
+    .user-card-summary {
       display: table;
-      width: 100%;
-      > div {
-        display: table-row-group;
+      dl {
+        display: table-row;
+        dt, dd {
+          display: table-cell;
+          vertical-align: baseline;
+        }
+        dt {
+          width: 0;
+          white-space: nowrap;
+          padding-right: 0.3rem;
+          text-align: right;
+        }
       }
-    }
-    input, button {
-      box-sizing: border-box;
-      width: 100%;
-      &[name="lat"], &[name="lat"] {
-        width: auto;
+      dt::after {
+        content: ": ";
+      }
+      dd dl, > div:last-child, > form > div:last-child {
+        margin-top: 0.7rem;
+      }
+      dd dl {
+        display: table;
+        width: 100%;
+        > div {
+          display: table-row-group;
+        }
+      }
+      input, button {
+        box-sizing: border-box;
+        width: 100%;
       }
     }
   }

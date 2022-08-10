@@ -38,30 +38,35 @@ const store = createStore({
   },
   actions: {
     getUsers({commit}) {
-      axios.get('https://jsonplaceholder.typicode.com/users')
-        .then(response => commit('getUsers', response.data))
-        .catch(error => alert(error))
+      axios.get('https://reqres.in/api/users')
+        .then(response => {
+          console.log(response);
+          commit('getUsers', response.data.data);
+        }, error => console.log(error))
       ;
     },
     getUser({commit}, id: number) {
-      axios.get('https://jsonplaceholder.typicode.com/users/' + id)
-        .then(response => {commit('getUser', response.data)})
-        .catch(error => alert(error))
+      axios.get('https://reqres.in/api/users/' + id)
+        .then(response => {
+          console.log(response);
+          commit('getUser', response.data.data);
+        }, error => console.log(error))
       ;
     },
     deleteUser({commit}, id: number) {
-      axios.delete('https://jsonplaceholder.typicode.com/users/' + id)
-        .then(() => commit('deleteUser', id))
-        .catch(error => alert(error))
+      axios.delete('https://reqres.in/api/users/' + id)
+        .then(response => {
+          console.log(response);
+          commit('deleteUser', id);
+        }, error => console.log(error))
       ;
     },
-    addUser({commit, dispatch}, user: User) {
-      dispatch('getUsers')
-        .then(() =>
-          axios.post('https://jsonplaceholder.typicode.com/users/' + user.id)
-        )
-        .then(() => commit('addUser', user))
-        .catch(error => alert(error))
+    addUser({dispatch}, user: User) {
+      axios.post('https://reqres.in/api/users', user)
+        .then(response => {
+          console.log(response);
+          dispatch('getUsers');
+        }, error => console.log(error))
       ;
     },
     sortUsers({commit}, payload) {

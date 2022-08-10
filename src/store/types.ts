@@ -1,34 +1,7 @@
 export interface User {
   id: number;
-  name?: string;
-  username?: string;
+  avatar?: string;
+  first_name?: string;
+  last_name?: string;
   email?: string;
-  address?: Address;
-  phone?: string;
-  website?: string;
-  company?: Company;
-}
-export interface Address {
-  street?: string;
-  suite?: string;
-  city?: string;
-  zipcode?: string;
-  geo?: Geo;
-}
-export interface Geo {
-  lat?: number;
-  lng?: number;
-}
-export interface Company {
-  name?: string;
-  catchPhrase?: string;
-  bs?: string;
-}
-export interface UserProcessed {
-  id: number;
-  name?: string;
-  email?: string;
-  city?: string;
-  phone?: string;
-  website?: string;
 }

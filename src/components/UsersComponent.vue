@@ -5,16 +5,18 @@
         v-for="field in Object.keys(usersProperties)"
         :key="field"
       >
-        <span>
+        <span v-if="field !== 'avatar'">
           {{ usersProperties[field] ? usersProperties[field] : field }}
         </span>
         <a
+          v-if="field !== 'avatar'"
           class="sort-link"
           href="javascript:void(0)"
           title="Сортировать по возрастанию"
           @click="e => sortUsers(e.target, field, false)"
         >↓</a>
         <a
+          v-if="field !== 'avatar'"
           class="sort-link"
           href="javascript:void(0)"
           title="Сортировать по убыванию"
@@ -29,6 +31,7 @@
         :key="field"
       >
         <input
+          v-if="field !== 'avatar'"
           type="text"
           placeholder="Фильтровать по значению"
           title="Фильтровать по значению"
@@ -55,20 +58,29 @@
         <dt>{{ usersProperties[field] }}</dt>
         <dd>
           <router-link
-            v-if="field === 'name'"
+            v-if="
+              field === 'avatar' ||
+              field === 'first_name'
+              || field === 'last_name'
+            "
             :to="`/users/${user.id}`"
           >
-            {{ user[field] }}
+            <img
+              v-if="field === 'avatar'"
+              class="user-avatar"
+              :src="user[field]"
+              :alt="
+                (user.first_name ? user.first_name : '') + ' ' + 
+                (user.last_name ? user.last_name : '')
+              "
+            />
+            <span v-else>
+              {{ user[field] }}
+            </span>
           </router-link>
           <a
             v-else-if="field === 'email'"
             :href="'mailto:' + user[field]"
-          >
-            {{ user[field] }}
-          </a>
-          <a
-            v-else-if="field === 'website'"
-            :href="(user[field].includes('://') ? '' : '//') + user[field]"
           >
             {{ user[field] }}
           </a>
@@ -91,24 +103,22 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
-import { UserProcessed } from '@/store/types';
-
+import { User } from '@/store/types';
 
 export default defineComponent({
   props: {
     users: {
-      type: Array as PropType<Array<UserProcessed>>,
+      type: Array as PropType<Array<User>>,
       default() {return [];},
     },
   },
   data() {
     return {
       usersProperties: {
-        name: 'Имя',
+        avatar: 'Аватар',
+        first_name: 'Имя',
+        last_name: 'Фамилия',
         email: 'e-mail',
-        city: 'Город',
-        phone: 'Телефон',
-        website: 'Сайт',
       },
     };
   },

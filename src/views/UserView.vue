@@ -1,63 +1,44 @@
 <template>
   <div v-if="user" class="page-container">
     <header class="users-header">
-      <h1>{{ user.name }}</h1>
+      <h1>
+        {{ user.first_name }}
+        {{ user.last_name }}
+      </h1>
       <div>Страница пользователя</div>
     </header>
     <main class="users-body">
       <div class="user-card">
-        <dl
-          v-for="field in Object.keys(userProperties)"
-          :key="field"
-        >
-          <dt>{{ userProperties[field] }}</dt>
-          <dd>
-            <dl v-if="field === 'address' && user[field]">
-              <div
-                v-for="field in Object.keys(userAddress)"
-                :key="field"
+        <img
+          v-if="user.avatar"
+          class="user-avatar"
+          :src="user.avatar"
+          :alt="
+            (user.first_name ? user.first_name : '') + ' ' + 
+            (user.last_name ? user.last_name : '')
+          "
+        />
+        <div class="user-card-summary">
+          <dl
+            v-for="field in Object.keys(userProperties)"
+            :key="field"
+          >
+            <dt>{{ userProperties[field] }}</dt>
+            <dd>
+              <a
+                v-if="field === 'email'"
+                :href="'mailto:' + user[field]"
               >
-                <dt>{{ userAddress[field] }}</dt>
-                <dd>
-                  <div v-if="field === 'geo' && user.address[field]">
-                    широта: {{ user.address[field].lat }},
-                    долгота: {{ user.address[field].lng }}
-                  </div>
-                  <div v-else>{{ user.address[field] }}</div>
-                </dd>
+                {{ user[field] }}
+              </a>
+              <div v-else>
+                {{ user[field] }}
               </div>
-            </dl>
-            <dl v-else-if="field === 'company' && user[field]">
-              <div
-                v-for="field in Object.keys(userCompany)"
-                :key="field"
-              >
-                <dt>{{ userCompany[field] }}</dt>
-                <dd>{{ user.company[field] }}</dd>
-              </div>
-            </dl>
-            <a
-              v-else-if="field === 'email'"
-              :href="'mailto:' + user[field]"
-            >
-              {{ user[field] }}
-            </a>
-            <a
-              v-else-if="field === 'website' && user[field]"
-              :href="(user[field].includes('://') ? '' : '//') + user[field]"
-            >
-              {{ user[field] }}
-            </a>
-            <div v-else>
-              {{ user[field] }}
-            </div>
-          </dd>
-        </dl>
+            </dd>
+          </dl>
+        </div>
       </div>
     </main>
-    <footer>
-      
-    </footer>
   </div>
 </template>
 
@@ -69,23 +50,7 @@ export default defineComponent({
   data() {
     return {
       userProperties: {
-        phone: 'Телефон',
         email: 'e-mail',
-        website: 'Сайт',
-        address: 'Адрес',
-        company: 'Компания',
-      },
-      userAddress: {
-        city: 'Город',
-        street: 'Улица',
-        suite: 'Дом',
-        zipcode: 'Индекс',
-        geo: 'Координаты'
-      },
-      userCompany: {
-        name: 'Название',
-        bs: 'Род деятельности',
-        catchPhrase: 'Слоган',
       },
     };
   },

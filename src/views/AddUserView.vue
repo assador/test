@@ -5,98 +5,39 @@
     </header>
     <main class="users-body">
       <div class="user-card">
-        <form
-          @submit.prevent="$store.dispatch('addUser', user)"
-        >
-          <dl
-            v-for="field in Object.keys(userProperties)"
-            :key="field"
+        <div class="user-card-summary">
+          <form
+            @submit.prevent="$store.dispatch('addUser', user)"
           >
-            <dt>{{ userProperties[field] }}</dt>
-            <dd>
-              <dl v-if="field === 'address'">
-                <div
-                  v-for="field in Object.keys(userAddress)"
-                  :key="field"
-                >
-                  <dt>{{ userAddress[field] }}</dt>
-                  <dd>
-                    <div v-if="field === 'geo'">
-                      широта:
-                      <input
-                        name="lat"
-                        type="number"
-                        @input="e => {
-                          if(!user.address) user.address = {};
-                          if(!user.address.geo) user.address.geo = {};
-                          user.address.geo.lat = e.target.value;
-                        }"
-                      />,
-                      долгота:
-                      <input
-                        name="lat"
-                        type="number"
-                        @input="e => {
-                          if(!user.address) user.address = {};
-                          if(!user.address.geo) user.address.geo = {};
-                          user.address.geo.lng = e.target.value;
-                        }"
-                      />
-                    </div>
-                    <div v-else>
-                      <input
-                        :name="field"
-                        type="text"
-                        @input="e => {
-                          if(!user.address) user.address = {};
-                          user.address[field] = e.target.value;
-                        }"
-                      />
-                    </div>
-                  </dd>
+            <dl
+              v-for="field in Object.keys(userProperties)"
+              :key="field"
+            >
+              <dt>{{ userProperties[field] }}</dt>
+              <dd>
+                <div v-if="field === 'avatar'">
+                  <input
+                    :name="field"
+                    type="file"
+                    @change="e => uploadAvatar(e)"
+                  />
                 </div>
-              </dl>
-              <dl v-else-if="field === 'company'">
-                <div
-                  v-for="field in Object.keys(userCompany)"
-                  :key="field"
-                >
-                  <dt>{{ userCompany[field] }}</dt>
-                  <dd>
-                    <input
-                      :name="field"
-                      type="text"
-                      @input="e => {
-                        if(!user.company) user.company = {};
-                        user.company[field] = e.target.value;
-                      }"
-                    />
-                  </dd>
+                <div v-else>
+                  <input
+                    :name="field"
+                    :type="field === 'email' ? 'email' : 'text'"
+                    @input="e => user[field] = e.target.value"
+                  />
                 </div>
-              </dl>
-              <div v-else>
-                <input
-                  :name="field"
-                  :type="
-                    field === 'email' ? 'email' :
-                    field === 'phone' ? 'tel' :
-                    field === 'website' ? 'url' :
-                    'text'
-                  "
-                  @input="e => user[field] = e.target.value"
-                />
-              </div>
-            </dd>
-          </dl>
-          <div>
-            <button type="submit">Добавить пользователя</button>
-          </div>
-        </form>
+              </dd>
+            </dl>
+            <div>
+              <button type="submit">Добавить пользователя</button>
+            </div>
+          </form>
+        </div>
       </div>
     </main>
-    <footer>
-      
-    </footer>
   </div>
 </template>
 
@@ -109,26 +50,27 @@ export default defineComponent({
     return {
       user: {} as User,
       userProperties: {
-        name: 'Имя',
-        phone: 'Телефон',
+        avatar: 'Аватар',
+        first_name: 'Имя',
+        last_name: 'Фамилия',
         email: 'e-mail',
-        website: 'Сайт',
-        address: 'Адрес',
-        company: 'Компания',
-      },
-      userAddress: {
-        city: 'Город',
-        street: 'Улица',
-        suite: 'Дом',
-        zipcode: 'Индекс',
-        geo: 'Координаты'
-      },
-      userCompany: {
-        name: 'Название',
-        bs: 'Род деятельности',
-        catchPhrase: 'Слоган',
       },
     };
+  },
+  methods: {
+    uploadAvatar(event: Event): void {
+      event.preventDefault();
+      const data = new FormData();
+      data.append('avatarFile', (event.target as HTMLInputElement).files![0]);
+      /*
+       * Не знаю, как в реальном API будет реализована загрузка аватарки.
+       * Может быть, аватарка сначала будет посылаться на сервер, который
+       * в ответ отдаёт её URL, который, в свою очередь, дальше, по сабмиту,
+       * будет уже поститься как поле нового юзера. А может быть, аватарка
+       * будет слаться сразу с другими данным. Пока тут ставлю заглушку:
+       */
+      this.user.avatar = 'https://test.com/test.jpg';
+    },
   },
 });
 </script>

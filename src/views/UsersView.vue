@@ -25,7 +25,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { User, UserProcessed } from '@/store/types';
+import { User } from '@/store/types';
 import UsersComponent from '@/components/UsersComponent.vue';
 
 export default defineComponent({
@@ -39,16 +39,15 @@ export default defineComponent({
     };
   },
   computed: {
-    usersProcessed(): Array<UserProcessed> {
-      const users: Array<UserProcessed> = [];
+    usersProcessed(): Array<User> {
+      const users: Array<User> = [];
       this.$store.state.users.map((user: User) => {
-        const userProcessed: UserProcessed = {
+        const userProcessed: User = {
           id: user.id,
-          name: user.name || '',
+          avatar: user.avatar || '',
+          first_name: user.first_name || '',
+          last_name: user.last_name || '',
           email: user.email || '',
-          city: !user.address ? '' : user.address.city || '',
-          phone: user.phone || '',
-          website: user.website || '',
         };
         let show = true;
         for (const field in userProcessed) {
@@ -63,7 +62,7 @@ export default defineComponent({
         }
         if (show) users.push(userProcessed);
       });
-      users.sort((a: UserProcessed, b: UserProcessed) => {
+      users.sort((a: User, b: User) => {
         if (
           a[this.$store.state.usersSort.property as keyof typeof a]! <
           b[this.$store.state.usersSort.property as keyof typeof b]!
@@ -85,8 +84,8 @@ export default defineComponent({
         this.usersProcessed.length / this.usersOnPageCount
       );
     },
-    usersPaged(): Array<UserProcessed> {
-      const users: Array<UserProcessed> = [];
+    usersPaged(): Array<User> {
+      const users: Array<User> = [];
       for (let i = 0; i < this.usersProcessed.length; i++) {
         if (
           i >= this.usersOnPageCount * (this.usersPage - 1) &&
@@ -97,9 +96,6 @@ export default defineComponent({
       }
       return users;
     },
-  },
-  mounted() {
-    this.$store.dispatch('getUsers');
   },
 });
 </script>
