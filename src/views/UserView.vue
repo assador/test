@@ -12,22 +12,22 @@
         >
           <dt>{{ userProperties[field] }}</dt>
           <dd>
-            <dl v-if="field === 'address'">
+            <dl v-if="field === 'address' && user[field]">
               <div
                 v-for="field in Object.keys(userAddress)"
                 :key="field"
               >
                 <dt>{{ userAddress[field] }}</dt>
                 <dd>
-                  <span v-if="field === 'geo'">
+                  <div v-if="field === 'geo' && user.address[field]">
                     широта: {{ user.address[field].lat }},
                     долгота: {{ user.address[field].lng }}
-                  </span>
-                  <span v-else>{{ user.address[field] }}</span>
+                  </div>
+                  <div v-else>{{ user.address[field] }}</div>
                 </dd>
               </div>
             </dl>
-            <dl v-else-if="field === 'company'">
+            <dl v-else-if="field === 'company' && user[field]">
               <div
                 v-for="field in Object.keys(userCompany)"
                 :key="field"
@@ -43,14 +43,14 @@
               {{ user[field] }}
             </a>
             <a
-              v-else-if="field === 'website'"
+              v-else-if="field === 'website' && user[field]"
               :href="(user[field].includes('://') ? '' : '//') + user[field]"
             >
               {{ user[field] }}
             </a>
-            <span v-else>
+            <div v-else>
               {{ user[field] }}
-            </span>
+            </div>
           </dd>
         </dl>
       </div>
@@ -84,15 +84,25 @@ export default defineComponent({
       },
       userCompany: {
         name: 'Название',
-        bs: 'Деятельность',
+        bs: 'Род деятельности',
         catchPhrase: 'Слоган',
       },
     };
   },
+  mounted() {
+    this.$store.dispatch('getUser', this.$attrs.id);
+  },
   computed: {
     user(): User {
-      return this.$store.state.users.find((u: User) => u.id === Number(this.$attrs.id));
+      return this.$store.state.user;
     },
+/*
+    user(): User {
+      return this.$store.state.users.find(
+        (u: User) => u.id === Number(this.$attrs.id)
+      );
+    },
+*/
   },
 });
 </script>

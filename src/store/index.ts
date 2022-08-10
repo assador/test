@@ -5,6 +5,7 @@ import { User } from '@/store/types';
 const store = createStore({
   state: {
     users: [] as Array<User>,
+    user: {} as User,
     usersSort: {
       property: 'id',
       reverse: false,
@@ -12,8 +13,18 @@ const store = createStore({
     filters: {} as Record<string, string>,
   },
   mutations: {
-    setUsers(state, users) {
+    getUsers(state, users) {
       state.users = users;
+    },
+    getUser(state, user) {
+      state.user = user;
+    },
+    deleteUser(state, id: number) {
+      const user = state.users.find((u: User) => u.id === id);
+      if (user) state.users.splice(state.users.indexOf(user), 1);
+    },
+    addUser(state, user: User) {
+      state.users.push(user);
     },
     sortUsers(state, payload) {
       state.usersSort.property = payload.property;
@@ -26,11 +37,31 @@ const store = createStore({
     },
   },
   actions: {
-    setUsers({commit}) {
+    getUsers({commit}) {
       axios.get('https://jsonplaceholder.typicode.com/users')
-        .then(response => {
-          commit('setUsers', response.data);
-        })
+        .then(response => commit('getUsers', response.data))
+        .catch(error => alert(error))
+      ;
+    },
+    getUser({commit}, id: number) {
+      axios.get('https://jsonplaceholder.typicode.com/users/' + id)
+        .then(response => {commit('getUser', response.data)})
+        .catch(error => alert(error))
+      ;
+    },
+    deleteUser({commit}, id: number) {
+      axios.delete('https://jsonplaceholder.typicode.com/users/' + id)
+        .then(() => commit('deleteUser', id))
+        .catch(error => alert(error))
+      ;
+    },
+    addUser({commit, dispatch}, user: User) {
+      dispatch('getUsers')
+        .then(() =>
+          axios.post('https://jsonplaceholder.typicode.com/users/' + user.id)
+        )
+        .then(() => commit('addUser', user))
+        .catch(error => alert(error))
       ;
     },
     sortUsers({commit}, payload) {

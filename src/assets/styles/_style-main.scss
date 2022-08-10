@@ -7,10 +7,11 @@
     display: table-row;
     & > * {
       display: table-cell;
+      width: 0;
       padding: 0.2rem 0.3rem;
       vertical-align: baseline;
       border: 1px solid #cccccc;
-      input {
+      input, button {
         box-sizing: border-box;
         width: 100%;
       }
@@ -32,6 +33,8 @@
   }
   .users-list dt {
     display: none;
+    width: 0;
+    white-space: nowrap;
     text-align: right;
     &::after {
       content: ": ";
@@ -50,6 +53,8 @@
         vertical-align: baseline;
       }
       dt {
+        width: 0;
+        white-space: nowrap;
         padding-right: 0.3rem;
         text-align: right;
       }
@@ -57,11 +62,21 @@
     dt::after {
       content: ": ";
     }
+    dd dl, > div:last-child {
+      margin-top: 0.7rem;
+    }
     dd dl {
       display: table;
-      margin-top: 0.7rem;
+      width: 100%;
       > div {
         display: table-row-group;
+      }
+    }
+    input, button {
+      box-sizing: border-box;
+      width: 100%;
+      &[name="lat"], &[name="lat"] {
+        width: auto;
       }
     }
   }

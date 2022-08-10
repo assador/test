@@ -1,11 +1,13 @@
 <template>
-  <div v-if="users.length" class="users-container">
+  <div class="users-container">
     <div class="users-captions">
       <div
         v-for="field in Object.keys(usersProperties)"
         :key="field"
       >
-        <span>{{ usersProperties[field] ? usersProperties[field] : field }}</span>
+        <span>
+          {{ usersProperties[field] ? usersProperties[field] : field }}
+        </span>
         <a
           class="sort-link"
           href="javascript:void(0)"
@@ -38,7 +40,9 @@
           "
         />
       </div>
-      <div></div>
+      <div>
+        <button @click="$router.push('/users/add')">Добавить</button>
+      </div>
     </div>
     <dl
       class="users-list"
@@ -53,7 +57,7 @@
         <dd>
           <router-link
             v-if="field === 'name'"
-            :to="`users/${user.id}`"
+            :to="`/users/${user.id}`"
           >
             {{ user[field] }}
           </router-link>
@@ -77,13 +81,12 @@
       <div>
         <dt>Действия</dt>
         <dd>
-          <button>Удалить</button>
+          <button @click="$store.dispatch('deleteUser', user.id)">
+            Удалить
+          </button>
         </dd>
       </div>
     </dl>
-  </div>
-  <div v-else>
-    Пользователей не найдено.
   </div>
 </template>
 

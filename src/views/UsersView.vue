@@ -16,6 +16,9 @@
       >
         {{ page }}
       </a>
+      <div v-if="!usersProcessed.length">
+        Пользователей не найдено.
+      </div>
     </footer>
   </div>
 </template>
@@ -43,7 +46,7 @@ export default defineComponent({
         for (const field in user) {
           if (
             this.$store.state.filters[field] &&
-            !user[field as keyof typeof user].toString().includes(
+            !user[field as keyof typeof user]!.toString().includes(
               this.$store.state.filters[field]
             )
           ) {
@@ -53,24 +56,24 @@ export default defineComponent({
         if (show) {
           users.push({
             id: user.id,
-            name: user.name,
-            email: user.email,
-            city: user.address.city,
-            phone: user.phone,
-            website: user.website,
+            name: user.name || '',
+            email: user.email || '',
+            city: !user.address ? '' : user.address.city || '',
+            phone: user.phone || '',
+            website: user.website || '',
           });
         }
       });
       users.sort((a: UserProcessed, b: UserProcessed) => {
         if (
-          a[this.$store.state.usersSort.property as keyof typeof a] <
-          b[this.$store.state.usersSort.property as keyof typeof b]
+          a[this.$store.state.usersSort.property as keyof typeof a]! <
+          b[this.$store.state.usersSort.property as keyof typeof b]!
         ) {
           return this.$store.state.usersSort.reverse ? 1 : -1;
         }
         if (
-          a[this.$store.state.usersSort.property as keyof typeof a] >
-          b[this.$store.state.usersSort.property as keyof typeof b]
+          a[this.$store.state.usersSort.property as keyof typeof a]! >
+          b[this.$store.state.usersSort.property as keyof typeof b]!
         ) {
           return this.$store.state.usersSort.reverse ? -1 : 1;
         }
@@ -97,7 +100,7 @@ export default defineComponent({
     },
   },
   mounted() {
-    this.$store.dispatch('setUsers');
+    this.$store.dispatch('getUsers');
   },
 });
 </script>
