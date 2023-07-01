@@ -74,14 +74,13 @@
 		</header>
 		<div id="up">
 			<div class="h1">Кешбэк за автоплатёж</div>
-			<div>Подключи автоплатёж и получай бонусами 5%
-от каждого платежа</div>
+			<div>Подключи автоплатёж и получай бонусами 5% от каждого платежа</div>
 			<a class="close" href="javascript:void(0)" onclick="this.parentElement.classList.add('hidden')"></a>
 		</div>
 		<a id="header-left" href="/"></a>
 		<div id="up-left"></div>
 		<div id="popup-replenishment" class="popup hidden">
-			<form action="post" class="popup-block block-01 shadowed fields-width_100">
+			<form action="/replenishment" method="post" class="popup-block block-01 shadowed fields-width_100">
 				<a class="close" href="javascript:void(0)" onclick="this.parentElement.parentElement.classList.add('hidden')"></a>
 				<h2 class="center">Пополнение баланса</h2>
 				<p class="center">Деньги при оплате картой зачисляются на лицевой счет
@@ -95,7 +94,7 @@
 			</form>
 		</div>
 		<div id="popup-autopay" class="popup hidden">
-			<form action="post" class="popup-block block-01 shadowed fields-width_100">
+			<form action="/autopay" method="post" class="popup-block block-01 shadowed fields-width_100">
 				<a class="close" href="javascript:void(0)" onclick="this.parentElement.parentElement.classList.add('hidden')"></a>
 				<h2 class="center">Подключить автоплатёж?</h2>
 				<p class="center">Для подключения, мы спишем с вашей карты 1 рубль и вернём его обратно.</p>
