@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ru" dir="ltr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<title>Тестовое задание Данцер (Дмитрий Соколов)</title>
+<link href="css/style.css" rel="stylesheet" type="text/css" />
+<link href="css/layout.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+	<div id="container">
+		<main id="main">
+			<section class="blocks blocks-2">
+				<article class="block-01 block-whf">
+					<div>
+						<h3>Рублёвый счёт</h3>
+						<p>№1000234567</p>
+					</div>
+					<p class="h2">3000 руб</p>
+					<div>
+						<p>Списание 10.08.2023г.</p>
+						<div class="blocks blocks-2">
+							<button type="button" onclick="document.getElementById('popup-replenishment').classList.remove('hidden')">Пополнить</button>
+							<button type="button" onclick="document.getElementById('popup-autopay').classList.remove('hidden')" class="button-02">Подключить автоплатёж</button>
+						</div>
+					</div>
+				</article>
+				<article class="block-01 block-whf">
+					<div>
+						<h3>Бонусный счёт</h3>
+						<p>№1000234567</p>
+					</div>
+					<p class="h2">3000 бонусов</p>
+					<button type="button" class="button-01">Потратить</button>
+				</article>
+				<article class="block-01">
+					<h3>Обащанный платёж</h3>
+					<p>Вы уже использовали обещанный платёж</p>
+					<p>Следующий обещанный платёж доступен после 11.11.2023 г.</p>
+				</article>
+				<article class="block-02 block-whf">
+					<h3>Статус<br />«Платина»</h3>
+					<div class="margin-01">
+						<p>У вас 1200 статустных баллов</p>
+						<div class="progress progress-100"></div>
+					</div>
+					<p>У вас самый высокий статус клиента</p>
+				</article>
+			</section>
+		</main>
+		<nav id="menu">
+			<a class="menu__home block-03" href="/">Главная</a>
+			<a class="menu__catalog" href="/">Каталог</a>
+			<a class="menu__services" href="/">Услуги</a>
+			<a class="menu__finances" href="/">Финансы</a>
+			<a class="menu__cameras" href="/">Камеры</a>
+			<a class="menu__documents" href="/">Документы</a>
+			<a class="menu__chat" href="/">Чат</a>
+			<a class="menu__help" href="/">Помощь</a>
+		</nav>
+		<header id="header">
+			<div>
+				Личный кабинет<br />
+				<strong>Константин Константинович Константинопольский</strong>
+			</div>
+			<nav class="nav-iconed">
+				<a href="/" class="nav-iconed__advanced"></a>
+				<a href="/" class="nav-iconed__notifications"></a>
+				<a href="/" class="nav-iconed__account"></a>
+			</nav>
+		</header>
+		<div id="up">
+			<div class="h1">Кешбэк за автоплатёж</div>
+			<div>Подключи автоплатёж и получай бонусами 5% от каждого платежа</div>
+			<a class="close" href="javascript:void(0)" onclick="console.log(this.parentElement.classList.add('hidden'))"></a>
+		</div>
+		<a id="header-left" href="/"></a>
+		<div id="up-left"></div>
+		<div id="popup-replenishment" class="popup hidden">
+			<form action="post" class="popup-block block-01 shadowed fields-width_100">
+				<a class="close" href="javascript:void(0)" onclick="this.parentElement.parentElement.classList.add('hidden')"></a>
+				<h2 class="center">Пополнение баланса</h2>
+				<p class="center">Деньги при оплате картой зачисляются на лицевой счет
+				в течение 5-30 минут.<br />Без комиссии</p>
+				<p><input type="number" name="amount" placeholder="Сумма платежа, ₽" /></p>
+				<p><button type="submit">Перейти к оплате</button></p>
+				<p>
+					<input type="checkbox" id="autopay" name="autopay" checked />
+					<label for="autopay">Подключить автоплатёж</label>
+				</p>
+			</form>
+		</div>
+		<div id="popup-autopay" class="popup hidden">
+			<form action="post" class="popup-block block-01 shadowed fields-width_100">
+				<a class="close" href="javascript:void(0)" onclick="this.parentElement.parentElement.classList.add('hidden')"></a>
+				<h2 class="center">Подключить автоплатёж?</h2>
+				<p class="center">Для подключения, мы спишем с вашей карты 1 рубль и вернём его обратно.</p>
+				<p><button type="submit">Подключить</button></p>
+			</form>
+		</div>
+	</div>
+</body>
+</html>
